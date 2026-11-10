@@ -1,28 +1,19 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-            px = [0 for _ in range(len(nums))]
-            sx = [0 for _ in range(len(nums))]
-            
-            
-            for k, _ in enumerate(nums):
-                if k == 0:
-                    px[k] = 1 
-                else:
-                    px[k] = px[k-1] * nums[k-1]
-            
-            for k,v in enumerate(range(len(nums), 0, -1)):
-                if k == 0:
-                    sx[k] = 1
-                else:
-                    sx[k] = sx[k-1] * nums[v]
+        res = [[1] for i in range(len(nums))]
 
-            sx.reverse()
-            
-            res = []
-            for i in range(len(nums)):
-                res.append(px[i] * sx[i])
-                
-            return res
+        pre = 1
+        for n in range(len(nums)):
+            res[n] = pre
+            pre *= nums[n]
+
+        post = 1
+        for n in range(len(nums)-1, -1, -1):
+            res[n] *= post 
+            post *= nums[n]
+
+        return res
+
             
 
 if __name__ == "__main__":
